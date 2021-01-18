@@ -14,7 +14,7 @@ namespace Todo.UI.Winforms.Helpers
     }
     public class MyAppSettingsHandler : IMyAppSettingsHandler
     {
-        private string _appName;
+        private readonly string _appName;
 
         public MyAppSettingsHandler(IOptions<MyAppSettings> options, ILogger<MyAppSettingsHandler> logger)
         {

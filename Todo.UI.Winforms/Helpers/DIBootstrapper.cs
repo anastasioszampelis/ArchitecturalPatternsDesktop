@@ -7,6 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Todo.DataAccess.Repositories;
+using Todo.Shared.Interfaces;
+using Todo.UI.Winforms.Presenters;
+using Todo.UI.Winforms.Views;
 
 namespace Todo.UI.Winforms.Helpers
 {
@@ -22,9 +26,15 @@ namespace Todo.UI.Winforms.Helpers
                 })
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddSingleton<MainForm>();
+                    services.AddSingleton<ITodoView, TodoView>();
+                    services.AddSingleton<IAboutView, AboutView>();
                     services.Configure<MyAppSettings>(context.Configuration);
                     services.AddSingleton<IMyAppSettingsHandler, MyAppSettingsHandler>();
+
+                    services.AddSingleton<ITodoRepository, TodoRepository>();
+                    services.AddTransient<TodoPresenter>();
+                    services.AddTransient<IAboutPresenter, AboutPresenter>();
+                    services.AddTransient(serviceProvider => new Lazy<IAboutPresenter>(() => serviceProvider.GetRequiredService<IAboutPresenter>()));
                 })
                 .ConfigureLogging(logging =>
                 {

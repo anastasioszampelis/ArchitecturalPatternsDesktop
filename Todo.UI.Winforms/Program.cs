@@ -6,7 +6,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Todo.Shared.Interfaces;
 using Todo.UI.Winforms.Helpers;
+using Todo.UI.Winforms.Presenters;
+using Todo.UI.Winforms.Views;
 
 namespace Todo.UI.Winforms
 {
@@ -36,8 +39,9 @@ namespace Todo.UI.Winforms
                 var services = serviceScope.ServiceProvider;
                 try
                 {
-                    var mainForm = services.GetRequiredService<MainForm>();
-                    Application.Run(mainForm);
+                    var presenter = services.GetRequiredService<TodoPresenter>();
+                    presenter.DisplayView();
+                    Application.Run();
                 }
                 catch (Exception ex)
                 {
